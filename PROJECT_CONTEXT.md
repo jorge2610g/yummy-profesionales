@@ -99,3 +99,19 @@ No se modificaron todavía módulos, textos comerciales ni estructura visual; es
 - Regla operativa: no eliminar módulos/archivos sin crear o verificar respaldo previo.
 - Se corrigió la política pública de `platform_countries` en Supabase para que las landings puedan cargar países y planes sin ejecutar `is_site_admin()`.
 
+
+## VALIDACIÓN DE RUTAS Y ALTAS POR VERTICAL — 2026-09-24
+
+Respaldo previo:
+- `backup/pre-routing-demo-validation-2026-09-24`
+
+Estado validado:
+- Landing v2.0.13.
+- Panel Profesionales v2.5.53.
+- Landing y panel aceptan únicamente `business_type = professional`.
+- Login, “Ir a mi panel”, confirmación de correo y alta redirigen a `https://pro.yummypro.online/panel/`.
+- “Instalar panel” usa `/panel/?install=pwa`, por lo que permanece en Profesionales.
+- “Ver demostración” abre el demo público `barberia-demo-yummypro`.
+- Una cuenta Restaurante o Retail es rechazada antes de abrir el panel.
+- La prueba nueva queda `is_demo = true` y usa exclusivamente la prueba predeterminada `professional`.
+
