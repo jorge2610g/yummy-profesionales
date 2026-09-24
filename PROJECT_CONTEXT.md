@@ -131,3 +131,11 @@ Estado validado:
 - Ya no debe pedir una segunda autenticación al llegar desde la landing.
 - Panel actual: v2.5.54.
 - Respaldo previo: `backup/pre-universal-session-handoff-2026-09-24`.
+
+## MÓDULOS COMPLETOS EN DEMO — 2026-09-24
+
+- Los negocios `is_demo = true` muestran todos los módulos definidos para Profesionales sin ser recortados por el plan.
+- Dashboard es la portada.
+- Panel Profesionales: v2.5.55.
+- Respaldo previo: `backup/pre-full-module-visibility-2026-09-24`.
+
