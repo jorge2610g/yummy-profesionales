@@ -2936,7 +2936,7 @@ async function logout(){
  const previewRequested=adminPreviewMode||document.body.classList.contains("admin-preview")||new URLSearchParams(location.search).has("admin_preview");
  if(previewRequested){return returnFromAdminPreview()}
  await sb.auth.signOut();
- window.location.replace("https://web.yummypro.online/")
+ window.location.replace("https://pro.yummypro.online/")
 }
 async function enter(user){
   currentUserId=user?.id||null;
@@ -4270,7 +4270,7 @@ function closeInventoryMovementModal(){inventoryMovementModal.classList.remove("
 document.getElementById("inventoryMovementType")?.addEventListener("change",()=>{const type=document.getElementById("inventoryMovementType"),label=document.getElementById("inventoryMovementQuantityLabel");if(type&&label)label.textContent=type.value==="ajuste"?"Nuevo stock final":"Cantidad"});
 async function saveInventoryMovement(){const item=inventoryItems.find(i=>Number(i.id)===Number(inventoryMovementItemId.value)),type=inventoryMovementType.value,value=Number(inventoryMovementQuantity.value);if(!item||!Number.isFinite(value)||value<0)return toast("Ingresa una cantidad válida");let delta=type==="ajuste"?value-Number(item.current_stock):(type==="entrada"?value:-value);if(delta===0)return toast("El movimiento no cambia el stock");if(Number(item.current_stock)+delta<0)return toast("La salida supera el stock disponible");const {error}=await sb.from("restaurant_inventory_movements").insert({restaurant_id:currentRestaurant,inventory_item_id:item.id,movement_type:type,quantity_delta:delta,note:inventoryMovementNote.value.trim()||null});if(error)return toast(error.message);closeInventoryMovementModal();await loadInventory();toast("Stock actualizado")}
 let bulkCatalogTarget="restaurant_menu",bulkCatalogRows=[],bulkCatalogSource="file";
-const BULK_DEMO_IMAGE="https://web.yummypro.online/demo-product.svg";
+const BULK_DEMO_IMAGE="https://pro.yummypro.online/demo-product.svg";
 function bulkNorm(v){return String(v==null?"":v).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"").trim()}
 function bulkVal(row,names){for(const k of Object.keys(row||{})){if(names.includes(bulkNorm(k)))return row[k]}return ""}
 function bulkNum(v){if(typeof v==="number")return Number.isFinite(v)?v:0;let s=String(v==null?"":v).trim().replace(/\s/g,"").replace(/\$/g,"");if(!s)return 0;if(s.includes(",")&&s.includes(".")){s=s.lastIndexOf(",")>s.lastIndexOf(".")?s.replace(/\./g,"").replace(",","."):s.replace(/,/g,"")}else if(s.includes(",")){const p=s.split(",");s=p.length===2&&p[1].length<=2?s.replace(",","."):s.replace(/,/g,"")}return Math.max(0,Number(s)||0)}
