@@ -90,3 +90,12 @@ No se modificaron todavía módulos, textos comerciales ni estructura visual; es
 - El registro desde esta landing queda fijado a Profesional / Servicios.
 - Al elegir un plan se conserva el mismo tipo de negocio durante el alta.
 - Commit: `fa13adc41749e9ae3eb9e8f234eed00e67d10102`.
+
+## RESPALDOS Y CORRECCIÓN DE LANDING — 2026-09-24
+
+- Respaldo original de Restaurante verificado: `backup-original-pre-retail-2026-09-23` → commit `2610571c77c40c7ef85ffd6238aef8ecfd038171`.
+- Segundo respaldo independiente creado: `backup/original-restaurante-100pct-pre-retail-profesionales-2026-09-24`.
+- Respaldo del estado actual de Profesionales antes de eliminar/ocultar módulos: `backup/pre-module-removal-2026-09-24`.
+- Regla operativa: no eliminar módulos/archivos sin crear o verificar respaldo previo.
+- Se corrigió la política pública de `platform_countries` en Supabase para que las landings puedan cargar países y planes sin ejecutar `is_site_admin()`.
+
