@@ -83,3 +83,10 @@ Primer cambio posterior al clon completo.
 - Se mantienen compartidos `menu.yummypro.online` y `admin.yummypro.online` donde corresponde.
 
 No se modificaron todavía módulos, textos comerciales ni estructura visual; este cambio es únicamente de separación de dominio/acceso.
+
+## PLANES POR VERTICAL EN LANDING — 2026-09-24
+
+- Landing de Profesionales carga únicamente planes con `business_type = professional`.
+- El registro desde esta landing queda fijado a Profesional / Servicios.
+- Al elegir un plan se conserva el mismo tipo de negocio durante el alta.
+- Commit: `fa13adc41749e9ae3eb9e8f234eed00e67d10102`.
