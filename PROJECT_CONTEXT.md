@@ -68,3 +68,18 @@ Resultado final:
 - `PROJECT_CONTEXT.md` se conserva solo como documentación de continuidad; no forma parte del runtime.
 
 Regla: cualquier personalización futura debe partir de esta copia limpia y hacerse solo por instrucción explícita.
+
+## SEPARACIÓN DE DOMINIO Y ACCESOS — 2026-09-24
+
+Primer cambio posterior al clon completo.
+
+- La landing ya no redirige a `web.yummypro.online`.
+- Inicio de sesión exitoso → `https://pro.yummypro.online/panel/`.
+- “Ir a mi panel” → `https://pro.yummypro.online/panel/`.
+- Registro/creación de cuenta usa `emailRedirectTo: https://pro.yummypro.online/panel/`.
+- Al terminar la creación de la prueba/cuenta → `https://pro.yummypro.online/panel/`.
+- El panel vuelve a su propia landing `https://pro.yummypro.online/` en lugar de Restaurante.
+- Recursos internos que apuntaban explícitamente a `web.yummypro.online` fueron apuntados al dominio propio.
+- Se mantienen compartidos `menu.yummypro.online` y `admin.yummypro.online` donde corresponde.
+
+No se modificaron todavía módulos, textos comerciales ni estructura visual; este cambio es únicamente de separación de dominio/acceso.
