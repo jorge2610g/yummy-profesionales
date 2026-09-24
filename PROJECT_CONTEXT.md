@@ -123,3 +123,11 @@ Estado validado:
 - La raíz del dominio redirige a la vertical correspondiente de la landing única.
 - El Admin central abre este panel según `business_type`.
 - Respaldo previo: `backup/pre-unified-landing-2026-09-24`.
+
+## SESIÓN UNIVERSAL ENTRE DOMINIOS — 2026-09-24
+
+- El panel acepta el handoff de sesión de la landing unificada mediante fragmento `yummy_access/yummy_refresh`.
+- El fragmento se elimina inmediatamente de la URL y la sesión se instala con `sb.auth.setSession()` antes de abrir la interfaz.
+- Ya no debe pedir una segunda autenticación al llegar desde la landing.
+- Panel actual: v2.5.54.
+- Respaldo previo: `backup/pre-universal-session-handoff-2026-09-24`.
