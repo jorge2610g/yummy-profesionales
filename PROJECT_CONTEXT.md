@@ -2,6 +2,24 @@
 
 Última actualización: 2026-09-24 (America/Santiago)
 
+## CLON COMPLETO DE RESTAURANTE — 2026-09-24
+
+Profesionales parte ahora de una copia completa de `yummy-restaurante`, no solo del panel.
+
+Validación:
+- 30 archivos del repositorio fuente (todos salvo `CNAME`) coinciden por SHA con Profesionales.
+- `index.html` es la landing page original de Restaurante.
+- `panel/index.html` es idéntico al panel original.
+- Se copiaron PWA, service worker, iconos, offline, documentación, configuración, pruebas y `panel/professional.js`.
+- El `CNAME` propio se conserva como `pro.yummypro.online`.
+
+Commits de sincronización completa:
+- `0d813b1078528d56c5baa78895621160c1ae6dcb` — landing y archivos base.
+- `84252eeaf7eab63a3ca8e0ceb5f502053e2c3e78` — panel, runtime y pruebas.
+- `275019ea3aeeae96bbe7c7af5dee64b31d002b5c` — assets PWA.
+
+Regla actual: desplegar/revisar primero esta copia completa y solo después ocultar o eliminar módulos según instrucción explícita.
+
 ## Punto de partida aprobado
 
 Por instrucción del usuario, el panel de Profesionales debe comenzar como una copia completa del panel de Restaurante, sin eliminar ni rediseñar módulos en esta primera etapa.
