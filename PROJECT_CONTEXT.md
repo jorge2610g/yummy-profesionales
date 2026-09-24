@@ -56,3 +56,15 @@ Commit base:
 No reconstruir el panel desde cero.
 
 El próximo trabajo es abrir/revisar esta copia y comenzar a eliminar, módulo por módulo, únicamente lo que Profesionales no necesita. Todo lo común con Restaurante y Retail debe conservarse idéntico mientras no exista una instrucción explícita de cambiarlo.
+
+## AUDITORÍA DE LIMPIEZA — 2026-09-24
+
+Se comparó el árbol completo contra `jorge2610g/yummy-restaurante`.
+
+Resultado final:
+- 0 archivos de código extra.
+- 0 archivos copiados con SHA distinto.
+- 0 archivos faltantes de la copia original, excluyendo el `CNAME` que debe ser propio del dominio.
+- `PROJECT_CONTEXT.md` se conserva solo como documentación de continuidad; no forma parte del runtime.
+
+Regla: cualquier personalización futura debe partir de esta copia limpia y hacerse solo por instrucción explícita.
