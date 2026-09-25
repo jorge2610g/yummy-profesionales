@@ -3299,6 +3299,10 @@ async function bootAdminPreview(payload){
   if(userError||!user)throw new Error("No se recibió una sesión administrativa válida.");
   const {data:role,error:roleError}=await sb.rpc("current_account_role");
   if(roleError||role!=="admin")throw new Error("La sesión recibida no corresponde al administrador.");
+  const businessResult=await sb.from("restaurants").select("id,name,business_type,active").eq("id",previewId).maybeSingle();
+  if(businessResult.error)throw businessResult.error;
+  if(!businessResult.data)throw new Error("El negocio #"+previewId+" ya no existe.");
+  if(!["professional"].includes(String(businessResult.data.business_type||"").toLowerCase()))throw new Error("El negocio seleccionado no pertenece a este módulo.");
   await enter(user);
   adminPreviewInitialized=adminPreviewMode||true;
  }catch(err){
