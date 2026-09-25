@@ -10,4 +10,5 @@ test('Profesionales Pruebas carga desde GitHub Pages', async ({ page }) => {
   expect(errors).toEqual([]);
   const html=await page.content();
   expect(html).toContain('wodqqheeesrelsbacmgx');
+  expect(page.url()).toContain('/yummy-restaurante-pruebas/#profesionales');
 });
