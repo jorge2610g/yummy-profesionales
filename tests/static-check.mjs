@@ -85,3 +85,7 @@ for(const marker of ['eq("business_type",businessType)','retail_orders:"retail_o
 for(const marker of ['admin_token_hash','verifyOtp({token_hash:payload.token_hash,type:"email"})'])if(!panel.includes(marker))throw new Error('panel/index.html: falta sesión administrativa aislada '+marker);
 
 for(const marker of ['openMenuFromPanel','create-admin-preview-login','admin_client_token_hash','admin_client_restaurant','current_account_role','isAdminSession'])if(!panel.includes(marker))throw new Error('panel/index.html: falta acceso automático del administrador al menú demo '+marker);
+
+// Seguridad de vista administrativa: sesión aislada por pestaña y ticket de un solo uso.
+for(const marker of ['ADMIN_PREVIEW_REQUESTED','storage:window.sessionStorage','signOut({scope:"local"})'])if(!panel.includes(marker))throw new Error('panel/index.html: falta aislamiento de sesión administrativa '+marker);
+for(const forbidden of ['else if(payload?.access_token&&payload?.refresh_token)','if(currentBusinessIsDemo())return [...raw]'])if(panel.includes(forbidden))throw new Error('panel/index.html: conserva bypass o handoff administrativo inseguro '+forbidden);
