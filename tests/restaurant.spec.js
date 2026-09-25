@@ -40,3 +40,13 @@ test('panel restaurante cerrado copia referencia admin sin barra visible',async(
 test('restringe POS y Cocina por rol y exige caja abierta',async({page})=>{await page.goto('/panel/');const html=await page.content();expect(html).toContain('operationalTabLockReason');expect(html).toContain('restaurant_has_open_cash');expect(html).toContain('posCashGate');expect(html).toContain('usuario con rol Mesero');expect(html).toContain('usuario con rol Cocina')});
 
 test('permite elegir mensual o anual en la compra del plan',async({page})=>{await page.goto('/panel/');const html=await page.content();expect(html).toContain('planCheckoutCycleAnnual');expect(html).toContain('setPlanPurchaseCycle');expect(html).toContain('billing_cycle:billingCycle');expect(html).toContain('12 meses de acceso')});
+
+
+test('panel abre menú demo con sesión administrativa temporal', async ({ request }) => {
+  const response=await request.get('/panel/');
+  expect(response.ok()).toBeTruthy();
+  const body=await response.text();
+  expect(body).toContain('openMenuFromPanel');
+  expect(body).toContain('admin_client_token_hash');
+  expect(body).toContain('create-admin-preview-login');
+});
