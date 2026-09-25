@@ -84,4 +84,4 @@ for(const marker of ['eq("business_type",businessType)','retail_orders:"retail_o
 
 for(const marker of ['admin_token_hash','verifyOtp({token_hash:payload.token_hash,type:"email"})'])if(!panel.includes(marker))throw new Error('panel/index.html: falta sesión administrativa aislada '+marker);
 
-for(const marker of ['openMenuFromPanel','create-admin-preview-login','admin_client_token_hash','admin_client_restaurant'])if(!panel.includes(marker))throw new Error('panel/index.html: falta acceso automático del administrador al menú demo '+marker);
+for(const marker of ['openMenuFromPanel','create-admin-preview-login','admin_client_token_hash','admin_client_restaurant','current_account_role','isAdminSession'])if(!panel.includes(marker))throw new Error('panel/index.html: falta acceso automático del administrador al menú demo '+marker);
