@@ -1,5 +1,12 @@
 # Changelog YummyPro — Profesionales
 
+## 2026-09-25/26 — 2.5.68 — Pruebas
+
+- Se corrigieron todos los enlaces públicos del panel de Pruebas para que abran Cliente Pruebas y no Producción.
+- Ver página de reservas y QR público respetan automáticamente el ambiente.
+- Volver al Admin desde una previsualización también vuelve al Admin de Pruebas.
+- Producción no fue modificada.
+
 ## 2026-09-25/26 — 2.5.67 — Pruebas
 
 - Se formalizó el flujo **Pruebas → Release → Producción**.
