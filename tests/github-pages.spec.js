@@ -7,7 +7,7 @@ test('RELEASE GATE: Profesionales Pruebas carga correctamente desde GitHub Pages
   const serverErrors = [];
   page.on('pageerror', (error) => pageErrors.push(String(error?.message || error)));
   page.on('response', (response) => {
-    if (response.status() >= 500 && response.url().startsWith(process.env.PAGES_TEST_URL)) {
+    if (response.status() >= 500) {
       serverErrors.push(`${response.status()} ${response.url()}`);
     }
   });
@@ -17,8 +17,9 @@ test('RELEASE GATE: Profesionales Pruebas carga correctamente desde GitHub Pages
   await expect(page.locator('body')).not.toBeEmpty();
 
   const html = await page.content();
-  expect(html, 'Profesionales Pruebas debe contener la configuración de Supabase Staging').toContain('wodqqheeesrelsbacmgx');
-  expect(page.url()).toContain('/yummy-profesionales-pruebas/');
+  expect(html, 'Profesionales Pruebas debe terminar sobre configuración de Supabase Staging').toContain('wodqqheeesrelsbacmgx');
+  expect(page.url(), 'Profesionales Pruebas debe entrar al shell compartido con Profesionales activo')
+    .toContain('/yummy-restaurante-pruebas/#profesionales');
 
   expect(pageErrors, `Errores JavaScript detectados: ${pageErrors.join(' | ')}`).toEqual([]);
   expect(serverErrors, `Errores 5xx detectados: ${serverErrors.join(' | ')}`).toEqual([]);
