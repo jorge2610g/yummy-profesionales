@@ -92,3 +92,5 @@ for(const forbidden of ['else if(payload?.access_token&&payload?.refresh_token)'
 
 // profesionales-pages-pruebas-routing
 for(const m of ['isPagesPruebas','https://jorge2610g.github.io/yummy-restaurante-pruebas/#profesionales','https://web.yummypro.online/#profesionales'])if(!landing.includes(m))throw new Error('index.html: falta redirect seguro profesionales '+m);
+
+for(const marker of ['YUMMY_CLIENT_BASE','yummy-cliente-pruebas','YUMMY_ADMIN_BASE','yummy-admin-pruebas'])if(!panel.includes(marker))throw new Error('panel/index.html: falta enrutamiento de Pruebas '+marker);
