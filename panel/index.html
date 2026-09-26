@@ -2806,6 +2806,8 @@ body.retail-scanner-open{overflow:hidden!important}
 <script src="/panel/professional.js?v=2532"></script>
 <script>
 const YUMMY_IS_PRODUCTION=location.hostname==="pro.yummypro.online";
+const YUMMY_CLIENT_BASE=YUMMY_IS_PRODUCTION?"https://menu.yummypro.online":"https://jorge2610g.github.io/yummy-cliente-pruebas";
+const YUMMY_ADMIN_BASE=YUMMY_IS_PRODUCTION?"https://admin.yummypro.online":"https://jorge2610g.github.io/yummy-admin-pruebas";
 const SB_URL=YUMMY_IS_PRODUCTION?"https://gulctljitzlwokqydigx.supabase.co":"https://wodqqheeesrelsbacmgx.supabase.co";
 const SB_KEY=YUMMY_IS_PRODUCTION?"sb_publishable__moppTxObowifx6rJbW_tw_3GiCkqhG":"sb_publishable_yiuYVYAAwVLtzlTdEM1kUg_s1Z7BiyE";
 document.querySelectorAll("[data-supabase-function]").forEach(el=>{el.textContent=SB_URL+"/functions/v1/"+el.dataset.supabaseFunction});
@@ -3020,7 +3022,7 @@ async function enter(user){
     applyRoleAccess();
     const {data:menuRestaurant}=await sb.from("restaurants").select("slug").eq("id",currentRestaurant).single();
     const menuLink=document.getElementById("viewMenuLink");
-    if(menuLink){menuLink.href="https://menu.yummypro.online/?r="+encodeURIComponent(menuRestaurant?.slug||currentRestaurant);menuLink.style.display=currentRole==="restaurant"?"":"none"}
+    if(menuLink){menuLink.href=YUMMY_CLIENT_BASE+"/?r="+encodeURIComponent(menuRestaurant?.slug||currentRestaurant);menuLink.style.display=currentRole==="restaurant"?"":"none"}
     syncRestaurantPushIfGranted();restoreAutoPrintOrders();setTimeout(startRestaurantOrderRealtime,0);setTimeout(startWaiterReadyReminderLoop,0);setTimeout(startWaiterPosRefreshLoop,0);setTimeout(startKitchenNewOrderReminderLoop,0);setTimeout(startSubscriptionAccessRealtime,0);
     const restaurantLoadGuard=new Promise((_,reject)=>setTimeout(()=>reject(new Error("La carga inicial del negocio tardó demasiado.")),15000));
     await Promise.race([loadRestaurants(),restaurantLoadGuard]);
@@ -3313,7 +3315,7 @@ async function returnFromAdminPreview(){
  try{await sb.auth.signOut({scope:"local"})}catch(e){console.warn("No se pudo revocar la sesión temporal de vista administrativa",e)}
  clearAdminPreviewSessionHash();
  try{if(window.opener&&!window.opener.closed){window.opener.focus();window.close();return}}catch(e){}
- window.location.href=location.hostname.endsWith(".vercel.app")?"https://yummy-admin-xi.vercel.app/":"https://admin.yummypro.online/"
+ window.location.href=YUMMY_ADMIN_BASE+"/"
 }
 async function restoreSession(){
  const preview=new URLSearchParams(location.search).has("admin_preview");
@@ -3711,7 +3713,7 @@ function syncRestaurantHeader(r){
  const name=String(r.name||("Negocio #"+currentRestaurant)).trim(),type=String(r.business_type||"restaurant"),retail=["supermarket","minimarket"].includes(type);
  const slug=String(r.slug||currentRestaurant),menuLink=document.getElementById("viewMenuLink");
  if(menuLink){menuLink.dataset.restaurantId=String(currentRestaurant||r.id||"");menuLink.dataset.isDemo=r.is_demo?"1":"0"}
- if(menuLink){menuLink.href="https://menu.yummypro.online/?r="+encodeURIComponent(slug);menuLink.title=retail?"Ver tienda online":"Ver menú";menuLink.style.removeProperty("display")}
+ if(menuLink){menuLink.href=YUMMY_CLIENT_BASE+"/?r="+encodeURIComponent(slug);menuLink.title=retail?"Ver tienda online":"Ver menú";menuLink.style.removeProperty("display")}
  const who=document.getElementById("who"),sessionEmail=String(who?.dataset.email||who?.textContent||"").trim();if(who&&!who.dataset.email)who.dataset.email=sessionEmail;
  const panelTitle=document.getElementById("panelMainTitle");if(panelTitle)panelTitle.textContent=PANEL_BRAND_NAME;
  document.title=PANEL_BRAND_NAME;
@@ -5822,7 +5824,7 @@ async function loadRestaurantTables(){
 function tableQrMenuUrl(row){
  const r=restaurants.find(x=>Number(x.id)===Number(currentRestaurant));
  if(!r)return "";
- return "https://menu.yummypro.online/?r="+encodeURIComponent(r.slug||r.id)+"&table="+encodeURIComponent(row.token);
+ return YUMMY_CLIENT_BASE+"/?r="+encodeURIComponent(r.slug||r.id)+"&table="+encodeURIComponent(row.token);
 }
 function tableQrImageUrl(row,size=220){return "https://api.qrserver.com/v1/create-qr-code/?size="+size+"x"+size+"&data="+encodeURIComponent(tableQrMenuUrl(row))}
 function renderRestaurantTables(){
@@ -5863,7 +5865,7 @@ function printRestaurantTableQr(id){
 function businessPublicPageInfo(r){
  const type=String(r?.business_type||"restaurant").toLowerCase();
  const label=type==="professional"?"página de reservas":(["supermarket","minimarket"].includes(type)?"tienda online":"menú online");
- return {label,url:"https://menu.yummypro.online/?r="+encodeURIComponent(r?.slug||r?.id||"")};
+ return {label,url:YUMMY_CLIENT_BASE+"/?r="+encodeURIComponent(r?.slug||r?.id||"")};
 }
 function businessQrFileName(r){
  return String(r?.name||"negocio").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")+"-qr.png";
@@ -6209,7 +6211,7 @@ window.saveOrderDetail=async function(){const old=orders.find(x=>Number(x.id)===
     <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="ghost" type="button" onclick="restaurantIssueDialog.close()">Cancelar</button><button class="primary" type="button" onclick="submitRestaurantIssueReport()">Enviar reporte</button></div>
   </div>
 </dialog>
-<footer class="admin-version">Profesional · Versión v2.5.67</footer></main></div><script>
+<footer class="admin-version">Profesional · Versión v2.5.68</footer></main></div><script>
 async function verifySubscriptionMercadoPago(){
  const box=document.getElementById("subscriptionMpStatus");
  if(!box)return;
