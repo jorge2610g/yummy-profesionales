@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="YummyPro Profesional">
-<link rel="manifest" href="/manifest.webmanifest?v=2508">
-<link rel="icon" href="/pwa-icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest?v=2508">
+<link rel="icon" href="../pwa-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <title>YummyPro Profesional</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -2093,6 +2093,7 @@ body.retail-scanner-open{overflow:hidden!important}
 <script id="boot-connectivity-diagnostic-v2525">
 (function(){
  const BACKEND_HEALTH=(location.hostname==="pro.yummypro.online"?"https://gulctljitzlwokqydigx.supabase.co":"https://wodqqheeesrelsbacmgx.supabase.co")+"/auth/v1/health";
+ const BACKEND_HEALTH_KEY=location.hostname==="pro.yummypro.online"?"sb_publishable__moppTxObowifx6rJbW_tw_3GiCkqhG":"sb_publishable_yiuYVYAAwVLtzlTdEM1kUg_s1Z7BiyE";
  const startedAt=Date.now();
  let lastProbe={online:navigator.onLine,backend:null,checkedAt:0};
  function el(id){return document.getElementById(id)}
@@ -2102,7 +2103,7 @@ body.retail-scanner-open{overflow:hidden!important}
  async function probeBackend(timeoutMs=4500){
   if(!navigator.onLine)return false;
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
-  try{await fetch(BACKEND_HEALTH+"?t="+Date.now(),{method:"GET",cache:"no-store",signal:controller.signal,credentials:"omit"});return true}catch(_){return false}finally{clearTimeout(timer)}
+  try{const res=await fetch(BACKEND_HEALTH+"?t="+Date.now(),{method:"GET",cache:"no-store",signal:controller.signal,credentials:"omit",headers:{apikey:BACKEND_HEALTH_KEY}});return res.ok}catch(_){return false}finally{clearTimeout(timer)}
  }
  window.yummyCheckConnection=async function(manual=false){
   const online=navigator.onLine;
@@ -2809,9 +2810,12 @@ body.retail-scanner-open{overflow:hidden!important}
 </section>
 </div><div id="waiterQrReadyModal" class="product-modal" aria-hidden="true"><div class="product-modal-backdrop" onclick="closeWaiterQrReady()"></div><div class="card product-modal-card waiter-qr-modal-card"><div class="module-head"><div><h2>Pedidos QR listos</h2><p class="mut">Todos los meseros ven esta misma lista. El primero que retire un pedido lo quita de Cocina.</p></div><button class="ghost modal-close" type="button" onclick="closeWaiterQrReady()" aria-label="Cerrar">✕</button></div><div id="waiterQrReadyList" class="list" style="margin-top:14px"></div><div class="waiter-qr-paid-section"><div class="module-head"><div><h3>QR pagados atendidos</h3><p class="mut">Aquí quedan los pedidos QR pagados en línea que tú retiraste. Confirma cuando los entregues en la mesa. Confirma cuando los entregues en la mesa.</p></div><button class="ghost" type="button" onclick="loadWaiterPaidQrOrders()">↻ Actualizar</button></div><div class="order-status-filters qr-paid-view-filters" aria-label="Pedidos QR pagados atendidos"><button class="summary-chip active" type="button" data-paid-qr-view="pending" onclick="setPaidQrView('pending')"><span>Por entregar</span><b id="posPaidQrPendingCount">0</b></button><button class="summary-chip" type="button" data-paid-qr-view="completed" onclick="setPaidQrView('completed')"><span>Entregados</span><b id="posPaidQrCompletedCount">0</b></button></div><div id="posPaidQrList" class="list" style="margin-top:14px"></div></div></div></div><div id="posOrderModal" class="product-modal" aria-hidden="true"><div class="product-modal-backdrop" onclick="closePosOrderModal()"></div><div class="card product-modal-card"><div class="module-head"><div><h2 id="posOrderModalTitle">Pedido en mesa</h2><p id="posOrderPaymentState" class="mut"></p><p id="posOrderWorkflowState" class="mut" style="margin-top:5px"></p></div><button class="ghost" type="button" onclick="closePosOrderModal()">✕</button></div><label>Cliente <span style="color:var(--bad)">*</span><input id="posEditCustomer" required></label><label>Mesa <span style="color:var(--bad)">*</span><select id="posEditTable" required><option value="">Selecciona una mesa</option></select></label><label>Observaciones<textarea id="posEditNotes"></textarea></label><h3 style="margin-top:16px">Productos del pedido</h3><div id="posEditItems" class="list"></div><div id="posEditCatalogWrap"><div class="row between" style="margin-top:18px"><h3>Agregar productos</h3><span class="mut">Toca + para agregar</span></div><input id="posEditProductSearch" type="search" placeholder="Buscar producto" oninput="renderPosEditCatalog(this.value)" aria-label="Buscar producto para agregar"><div class="pos-category-wrap"><div class="pos-category-label">Categorías</div><div id="posEditCategoryTabs" class="pos-category-tabs" aria-label="Categorías para agregar productos"></div></div><div id="posEditProductCatalog" class="pos-edit-catalog"></div></div><div class="row between" style="margin-top:14px"><b>Total</b><strong id="posEditTotal" class="price">$0</strong></div><div id="posEditActions" class="actions" style="margin-top:14px"><button id="posSaveOrderBtn" class="ghost" type="button" onclick="savePosOrderEdit()">Guardar cambios</button><button id="posWithdrawOrderBtn" class="primary hidden" type="button" onclick="withdrawPosOrder()">🍽️ Retirar pedido</button><button id="posPayOrderBtn" class="primary hidden" type="button" onclick="showPosPayment()">💳 Cobrar cuenta</button></div><div id="posPaymentPanel" class="item pos-payment-panel hidden" style="margin-top:14px"><h3>¿Cómo pagará el cliente?</h3><p class="mut">Selecciona el método de pago para completar la cuenta.</p><div class="pos-payment-actions"><button class="primary" type="button" onclick="payPosOrder('Efectivo')">💵 Efectivo</button><button class="primary" type="button" onclick="payPosOrder('Tarjeta POS')">💳 Tarjeta POS</button><button class="ghost" type="button" onclick="hidePosPayment()">← Volver</button></div></div></div></div><div id="cashMovementModal" class="product-modal" aria-hidden="true"><div class="product-modal-backdrop" onclick="closeCashMovementDetail()"></div><div class="card product-modal-card"><div class="module-head"><div><h2>Detalle de la transacción</h2><p id="cashMovementDetailSubtitle" class="mut"></p></div><button class="ghost" type="button" onclick="closeCashMovementDetail()">✕</button></div><div id="cashMovementDetailBody"></div></div></div><div id="toast" class="toast"></div>
 
-<script src="/panel/professional.js?v=2533"></script>
+<script src="./professional.js?v=2533"></script>
 <script>
 const YUMMY_IS_PRODUCTION=location.hostname==="pro.yummypro.online";
+const YUMMY_LANDING_URL=YUMMY_IS_PRODUCTION?"https://web.yummypro.online/":"https://jorge2610g.github.io/yummy-restaurante-pruebas/#profesionales";
+const YUMMY_LOGOUT_URL=YUMMY_IS_PRODUCTION?"https://web.yummypro.online/?logout=1":"https://jorge2610g.github.io/yummy-restaurante-pruebas/?logout=1#profesionales";
+function returnToYummyLanding(){window.location.replace(YUMMY_LANDING_URL)};
 const YUMMY_CLIENT_BASE=YUMMY_IS_PRODUCTION?"https://menu.yummypro.online":"https://jorge2610g.github.io/yummy-cliente-pruebas";
 const YUMMY_ADMIN_BASE=YUMMY_IS_PRODUCTION?"https://admin.yummypro.online":"https://jorge2610g.github.io/yummy-admin-pruebas";
 const SB_URL=YUMMY_IS_PRODUCTION?"https://gulctljitzlwokqydigx.supabase.co":"https://wodqqheeesrelsbacmgx.supabase.co";
@@ -2954,7 +2958,7 @@ async function logout(){
  const previewRequested=adminPreviewMode||document.body.classList.contains("admin-preview")||new URLSearchParams(location.search).has("admin_preview");
  if(previewRequested){return returnFromAdminPreview()}
  try{await sb.auth.signOut()}catch(e){console.warn("No se pudo cerrar la sesión remota",e)}
- window.location.replace("https://web.yummypro.online/?logout=1")
+ window.location.replace(YUMMY_LOGOUT_URL)
 }
 async function enter(user){
   currentUserId=user?.id||null;
@@ -2986,8 +2990,8 @@ async function enter(user){
     }
     msg.textContent="Cargando restaurante...";
     const {data:accountRole,error:roleError}=await sb.rpc("current_account_role");
-    if(roleError){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="No se pudo verificar el tipo de cuenta.";window.location.replace("https://web.yummypro.online/");return}
-    if(accountRole!=="restaurant"){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent=accountRole==="admin"?"Esta cuenta es de administrador. Ingresa desde el panel de administración.":accountRole==="customer"?"Esta cuenta es de cliente y no tiene acceso al panel de negocio.":"Esta cuenta no está clasificada como negocio.";window.location.replace("https://web.yummypro.online/");return}
+    if(roleError){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="No se pudo verificar el tipo de cuenta.";window.location.replace(YUMMY_LANDING_URL);return}
+    if(accountRole!=="restaurant"){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent=accountRole==="admin"?"Esta cuenta es de administrador. Ingresa desde el panel de administración.":accountRole==="customer"?"Esta cuenta es de cliente y no tiene acceso al panel de negocio.":"Esta cuenta no está clasificada como negocio.";window.location.replace(YUMMY_LANDING_URL);return}
     let {data:membership,error:membershipError}=await sb.from("restaurant_staff")
       .select("restaurant_id,role,permissions")
       .eq("user_id",user.id).eq("active",true);
@@ -2995,7 +2999,7 @@ async function enter(user){
     membership=membership||[];
     if(!membership.length && user.user_metadata?.trial_restaurant_name){
       const requestedTrialType=String(user.user_metadata.trial_business_type||PANEL_DEFAULT_BUSINESS_TYPE).toLowerCase();
-      if(!panelBusinessTypeAllowed(requestedTrialType)){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="Esta solicitud de prueba corresponde a "+panelBusinessTypeLabel(requestedTrialType)+". Ábrela desde su dominio correspondiente.";window.location.replace("https://web.yummypro.online/");return}
+      if(!panelBusinessTypeAllowed(requestedTrialType)){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="Esta solicitud de prueba corresponde a "+panelBusinessTypeLabel(requestedTrialType)+". Ábrela desde su dominio correspondiente.";window.location.replace(YUMMY_LANDING_URL);return}
       const cr=await sb.rpc("create_my_trial_restaurant_v3",{
         p_name:user.user_metadata.trial_restaurant_name,
         p_whatsapp:user.user_metadata.trial_whatsapp||"",
@@ -3010,13 +3014,13 @@ async function enter(user){
         membership=retry.data||[];
       }
     }
-    if(!membership.length){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="Esta cuenta no tiene un negocio asignado.";window.location.replace("https://web.yummypro.online/");return}
+    if(!membership.length){await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="Esta cuenta no tiene un negocio asignado.";window.location.replace(YUMMY_LANDING_URL);return}
     const membershipIds=membership.map(x=>Number(x.restaurant_id)).filter(Number.isFinite);
     const {data:membershipBusinesses,error:membershipBusinessError}=await sb.from("restaurants").select("id,business_type").in("id",membershipIds);
     if(membershipBusinessError)throw membershipBusinessError;
     const allowedBusinessIds=new Set((membershipBusinesses||[]).filter(x=>panelBusinessTypeAllowed(x.business_type)).map(x=>Number(x.id)));
     const verticalMembership=membership.find(x=>allowedBusinessIds.has(Number(x.restaurant_id)));
-    if(!verticalMembership){const actual=(membershipBusinesses||[])[0]?.business_type||"";await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="Esta cuenta pertenece a "+panelBusinessTypeLabel(actual)+", no al panel "+PANEL_VERTICAL_LABEL+".";window.location.replace("https://web.yummypro.online/");return}
+    if(!verticalMembership){const actual=(membershipBusinesses||[])[0]?.business_type||"";await sb.auth.signOut();document.body.classList.remove("auth-loading");msg.textContent="Esta cuenta pertenece a "+panelBusinessTypeLabel(actual)+", no al panel "+PANEL_VERTICAL_LABEL+".";window.location.replace(YUMMY_LANDING_URL);return}
     currentRestaurant=Number(verticalMembership.restaurant_id);startScopedContentRealtime();
     currentRole=verticalMembership.role||"restaurant";
     trackRestaurantEvent("session_started","dashboard",{role:currentRole});
@@ -3063,7 +3067,7 @@ async function enter(user){
     if(adminPreviewMode||new URLSearchParams(location.search).has("admin_preview")){
       showAdminPreviewFailure(e.message||"No se pudo cargar la información del negocio.");
     }else{
-      window.location.replace("https://web.yummypro.online/");
+      window.location.replace(YUMMY_LANDING_URL);
     }
   }
 }
@@ -3390,11 +3394,11 @@ async function restoreSession(){
     const login=document.getElementById("login");
     if(login){
      login.classList.remove("hidden");
-     login.innerHTML='<div class="card"><h1>📲 Instalar YummyPro Profesional</h1><p class="mut">Puedes instalar este panel como una aplicación en tu celular sin iniciar sesión primero.</p><button class="primary full" type="button" onclick="installYummyProPwa()">Instalar aplicación</button><button class="ghost full" type="button" onclick="window.location.replace(\'https://web.yummypro.online/\')">Volver a YummyPro</button></div>';
+     login.innerHTML='<div class="card"><h1>📲 Instalar YummyPro Profesional</h1><p class="mut">Puedes instalar este panel como una aplicación en tu celular sin iniciar sesión primero.</p><button class="primary full" type="button" onclick="installYummyProPwa()">Instalar aplicación</button><button class="ghost full" type="button" onclick="returnToYummyLanding()">Volver a YummyPro</button></div>';
     }
     return
    }
-   window.location.replace("https://web.yummypro.online/");return
+   window.location.replace(YUMMY_LANDING_URL);return
   }
  }catch(e){
   document.body.classList.remove("auth-loading");document.body.classList.add("auth-ready");
@@ -3402,7 +3406,7 @@ async function restoreSession(){
   if(preview){
    showAdminPreviewFailure(e.message||"No se pudo validar la sesión administrativa.");
   }else{
-   window.location.replace("https://web.yummypro.online/");
+   window.location.replace(YUMMY_LANDING_URL);
    return
   }
  }finally{
@@ -4481,7 +4485,7 @@ function pushKeyBytes(value){const padding="=".repeat((4-value.length%4)%4),base
 async function registerRestaurantPush(){
  if(!("serviceWorker" in navigator)||!("PushManager" in window)||Notification.permission!=="granted"||!currentRestaurant)return;
  const {data:{user}}=await sb.auth.getUser();if(!user)return;
- const registration=await navigator.serviceWorker.register("/push-sw.js");
+ const registration=await navigator.serviceWorker.register("../push-sw.js");
  let subscription=await registration.pushManager.getSubscription();
  if(subscription){
   try{
@@ -6418,7 +6422,7 @@ window.addEventListener("DOMContentLoaded",async()=>{
  setupYummyProNetworkStatus();
  try{
   if("serviceWorker" in navigator){
-   const registration=await navigator.serviceWorker.register("/push-sw.js");
+   const registration=await navigator.serviceWorker.register("../push-sw.js");
    watchYummyProServiceWorker(registration);
   }
  }catch(e){console.error("No se pudo preparar YummyPro para instalación",e)}
