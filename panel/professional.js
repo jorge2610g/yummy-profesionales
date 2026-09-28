@@ -254,7 +254,14 @@ async function refreshProfessionalDashboard(){
 /* YummyPro Custom Domains v1 */
 (function(){
   const DOMAIN_FN="verify-business-domain";
-  const PROVISION_DOMAIN_FN="provision-business-domain";\n  const CUSTOM_DOMAIN_TIMEOUT_MS=15000;\n\n  function withCustomDomainTimeout(promise,message){\n    let timeoutId;\n    const timeout=new Promise((_,reject)=>{timeoutId=setTimeout(()=>reject(new Error(message||"La conexión tardó demasiado. Intenta nuevamente.")),CUSTOM_DOMAIN_TIMEOUT_MS)});\n    return Promise.race([promise,timeout]).finally(()=>clearTimeout(timeoutId));\n  }
+  const PROVISION_DOMAIN_FN="provision-business-domain";
+  const CUSTOM_DOMAIN_TIMEOUT_MS=15000;
+
+  function withCustomDomainTimeout(promise,message){
+    let timeoutId;
+    const timeout=new Promise((_,reject)=>{timeoutId=setTimeout(()=>reject(new Error(message||"La conexión tardó demasiado. Intenta nuevamente.")),CUSTOM_DOMAIN_TIMEOUT_MS)});
+    return Promise.race([promise,timeout]).finally(()=>clearTimeout(timeoutId));
+  }
 
   function escDomainText(value){
     return String(value??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
