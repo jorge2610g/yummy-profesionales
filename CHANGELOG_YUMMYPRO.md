@@ -1,5 +1,10 @@
 # Changelog YummyPro — Profesionales
 
+## 2026-09-28 — 2.5.72 — Pruebas
+
+- Tras verificar DNS, el panel inicia el aprovisionamiento seguro del hostname y SSL en backend.
+- Producción no fue modificada.
+
 ## 2026-09-26 — 2.5.69 — Pruebas
 
 - Se añadió el switch **Marca blanca / White Label** dentro de Marca/Apariencia.
